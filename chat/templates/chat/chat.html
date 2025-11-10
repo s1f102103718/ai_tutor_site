@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>AIプログラミングチューター</title>
+    <link rel="stylesheet" href="{% static 'chat/chat.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/codemirror.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/mode/python/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/addon/edit/closebrackets.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>👩‍💻 AIプログラミングチューター</h1>
+
+        <div class="chat-box" id="chat-box"></div>
+
+        <label for="skill-level">習熟度:</label>
+            <select id="skill-level">
+                <option value="beginner">初心者</option>
+                <option value="intermediate">中級者</option>
+                <option value="advanced">上級者</option>
+            </select>
+
+
+        <div class="input-area">
+            <label for="chat-input">💬 会話入力：</label>
+            <input type="text" id="chat-input" placeholder="ここに返信を入力" />
+
+            <label for="problem">🧩 問題文：</label>
+            <textarea id="problem" placeholder="例: FizzBuzz問題を解きたい..." rows="3"></textarea>
+
+            <label for="question">💬 質問内容：</label>
+            <input type="text" id="question" placeholder="AIに質問してみよう…" />
+
+            <label for="code">💻 現時点のコード：</label>
+            <textarea id="code" name="code"></textarea>
+
+            <button id="send-btn">送信</button>
+
+            <button id="new-session" class="bg-gray-300 text-gray-800 px-3 py-1 rounded hover:bg-gray-400">
+             💬 新しい会話を始める
+            </button>
+
+            <button id="delete-history" class="bg-red-400 text-white px-3 py-1 rounded hover:bg-red-500">
+              🗑️ 履歴を削除
+            </button>
+
+
+        </div>
+    </div>
+
+    <script src="{% static 'chat/chat.js' %}"></script>
+</body>
+</html>
