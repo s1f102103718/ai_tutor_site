@@ -128,7 +128,7 @@ document.getElementById("send-btn").addEventListener("click", async () => {
 // =======================
 // 会話入力専用の処理
 // =======================
-document.getElementById("chat-input").addEventListener("keypress", async (e) => {
+  document.getElementById("chat-input").addEventListener("keypress", async (e) => {
     if (e.key !== "Enter") return;
 
     const message = e.target.value.trim();

@@ -12,6 +12,42 @@ client = openai.OpenAI(
 
 )
 
+# ================================
+# 習熟度別プロンプト（SYSTEM）
+# ================================
+BEGINNER_PROMPT = """
+あなたはプログラミング初心者向けの家庭教師です。
+専門用語は極力避け、必ず噛み砕いた言葉を優先して説明してください。
+初心者がつまずきやすいポイントを事前に察して補足説明を入れてください。
+
+回答スタイル：
+- 例え話や具体例を使う
+- 用語には必ず簡単な説明を添える
+- ステップごとに説明
+- 優しく丁寧に
+"""
+
+INTERMEDIATE_PROMPT = """
+あなたはプログラミング中級者向けのメンターです。
+基礎知識がある前提で、効率的な書き方や改善ポイントを説明してください。
+
+回答スタイル：
+- 冗長な基礎説明は不要
+- ベストプラクティスや代替案も提示
+- コードは簡潔に
+"""
+
+ADVANCED_PROMPT = """
+あなたはプロエンジニア向けの技術コンサルタントです。
+高度な知識がある前提で回答してください。
+
+回答スタイル：
+- 基礎説明は省略
+- 内部仕組み・アーキテクチャ・最適化に触れる
+- 専門用語の使用OK
+- 本質的な技術的分析を優先
+"""
+
 @csrf_exempt
 def chat_with_ai(request):
     if request.method == "POST":
@@ -22,12 +58,15 @@ def chat_with_ai(request):
         session_id = data.get("session_id", "default")
         skill_level = data.get("skill_level", "beginner")
 
+        # -----------------------
+        # SYSTEM プロンプトを選択
+        # -----------------------
         if skill_level == "beginner":
-            system_message = "あなたは初心者向けにわかりやすく、具体例を使って丁寧に説明してください。"
+            system_prompt = BEGINNER_PROMPT
         elif skill_level == "intermediate":
-            system_message = "あなたは中級者向けに適度な技術的詳細も交えて説明してください。"
+            system_prompt = INTERMEDIATE_PROMPT
         else:
-            system_message = "あなたは上級者向けに効率的で専門的な内容で回答してください。"
+            system_prompt = ADVANCED_PROMPT
 
         # 💾 DBにユーザー発言を保存
         ChatMessage.objects.create(
@@ -43,13 +82,7 @@ def chat_with_ai(request):
         messages = [
             {
                 "role": "system",
-                "content": (
-                    "あなたは優秀なプログラミングチューターです。"
-                    "ユーザーが解こうとしている課題（問題文）と、そのコードを理解した上で、"
-                    "直接的な回答は用いずに"
-                    "質問に対して段階的にステップを刻んで丁寧に答えてください。"
-                    + system_message
-                ),
+                "content": system_prompt,
             },
             {
                 "role": "user",
