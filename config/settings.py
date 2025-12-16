@@ -65,6 +65,8 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 import os
 
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
-DEBUG = os.environ.get("DEBUG", "False") == "True"
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    ".railway.app",
+]
