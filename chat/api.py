@@ -5,9 +5,6 @@ from .models import ChatMessage
 import json, os
 
 client = openai.OpenAI(
-
-    api_key= os.getenv("OPENAI_API_KEY"),
-
     base_url="https://api.openai.iniad.org/api/v1",
 
 )
