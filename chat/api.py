@@ -54,7 +54,7 @@ def chat_with_ai(request):
         session_id = data.get("session_id", "default")
         skill_level = data.get("skill_level", "beginner")
         client = openai.OpenAI(
-            api_key=api_key
+            api_key=api_key,
             base_url="https://api.openai.iniad.org/api/v1",
         )
 
