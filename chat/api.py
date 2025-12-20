@@ -4,11 +4,6 @@ import openai
 from .models import ChatMessage
 import json, os
 
-client = openai.OpenAI(
-    base_url="https://api.openai.iniad.org/api/v1",
-
-)
-
 # ================================
 # 習熟度別プロンプト（SYSTEM）
 # ================================
@@ -50,11 +45,18 @@ ADVANCED_PROMPT = """
 def chat_with_ai(request):
     if request.method == "POST":
         data = json.loads(request.body)
+        api_key = data.get("api_key")
+        if not api_key:
+            return JsonResponse({"error": "API key missing"}, status=400)
         problem = data.get("problem", "")
         question = data.get("question", "")
         code = data.get("code", "")
         session_id = data.get("session_id", "default")
         skill_level = data.get("skill_level", "beginner")
+        client = openai.OpenAI(
+            api_key=api_key
+            base_url="https://api.openai.iniad.org/api/v1",
+        )
 
         # -----------------------
         # SYSTEM プロンプトを選択

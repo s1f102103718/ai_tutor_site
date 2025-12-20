@@ -200,3 +200,28 @@ document.getElementById("delete-history").addEventListener("click", async () => 
         alert("履歴削除に失敗しました。");
     }
 });
+
+// =======================
+// APIキー処理
+// =======================
+const apiKey = document.getElementById("apiKeyInput").value;
+
+if (!apiKey) {
+  alert("APIキーを入力してください");
+  return;
+}
+
+const res = await fetch("/api/chat/", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    api_key: apiKey,
+    problem,
+    question,
+    code,
+    session_id: sessionId,
+    skill_level: skillLevel
+  })
+});
