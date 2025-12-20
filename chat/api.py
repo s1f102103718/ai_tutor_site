@@ -141,3 +141,4 @@ def delete_chat_history(request):
         return JsonResponse({"deleted": deleted_count})
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=500)
+
