@@ -206,11 +206,12 @@ document.getElementById("delete-history").addEventListener("click", async () => 
 // =======================
 const apiKey = document.getElementById("apiKeyInput").value;
 
+/*
 if (!apiKey) {
   alert("APIキーを入力してください");
   return;
 }
-
+*/
 const res = await fetch("/api/chat/", {
   method: "POST",
   headers: {

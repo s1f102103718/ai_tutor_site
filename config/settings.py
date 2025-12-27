@@ -65,9 +65,14 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # Railway 
 import os
 
-SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
-DEBUG = False
+SECRET_KEY = os.getenv(
+    "DJANGO_SECRET_KEY",
+    "django-insecure-local-dev-key-change-this"
+    )
+DEBUG = True
 
 ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
     ".railway.app",
 ]
