@@ -65,6 +65,18 @@ if (newSessionBtn) {
 // 送信ボタン処理
 // =======================
 document.getElementById("send-btn").addEventListener("click", async () => {
+
+  // =======================
+  // APIキー処理
+  // =======================
+  const apiKey = document.getElementById("apiKeyInput").value;
+
+  if (!apiKey) {
+    alert("APIキーを入力してください");
+    return;
+  }
+
+
   const problem = document.getElementById("problem").value.trim();
   const question = document.getElementById("question").value.trim();
   const code = codeMirror.getValue();
@@ -98,7 +110,8 @@ document.getElementById("send-btn").addEventListener("click", async () => {
         question,
         code,
         session_id: sessionId,
-        skill_level: skillLevel
+        skill_level: skillLevel,
+        api_key: apiKey
       })
     });
 
@@ -131,6 +144,17 @@ document.getElementById("send-btn").addEventListener("click", async () => {
   document.getElementById("chat-input").addEventListener("keypress", async (e) => {
     if (e.key !== "Enter") return;
 
+    // =======================
+    // APIキー処理
+    // =======================
+    const apiKey = document.getElementById("apiKeyInput").value;
+
+    if (!apiKey) {  
+      alert("APIキーを入力してください");
+      return;
+    }
+
+
     const message = e.target.value.trim();
     if (!message) return;
 
@@ -153,7 +177,8 @@ document.getElementById("send-btn").addEventListener("click", async () => {
                 question: message, // 会話内容を question に渡す
                 code: "",          // コードは更新しない
                 session_id: sessionId,
-                skill_level: skillLevel
+                skill_level: skillLevel,
+                api_key: apiKey
             })
         });
 
@@ -199,30 +224,4 @@ document.getElementById("delete-history").addEventListener("click", async () => 
         console.error(err);
         alert("履歴削除に失敗しました。");
     }
-});
-
-// =======================
-// APIキー処理
-// =======================
-const apiKey = document.getElementById("apiKeyInput").value;
-
-/*
-if (!apiKey) {
-  alert("APIキーを入力してください");
-  return;
-}
-*/
-const res = await fetch("/api/chat/", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({
-    api_key: apiKey,
-    problem,
-    question,
-    code,
-    session_id: sessionId,
-    skill_level: skillLevel
-  })
 });
